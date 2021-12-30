@@ -1,4 +1,4 @@
-# React Lineage Graph
+# React Graph Library
 
 ## Features
 
