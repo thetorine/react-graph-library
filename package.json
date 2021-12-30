@@ -1,7 +1,7 @@
 {
-  "name": "lineage-graph",
+  "name": "react-graph-library",
   "version": "0.0.1",
-  "description": "React component for viewing data lineage",
+  "description": "Fully customisable React library for viewing graphs",
   "main": "index.js",
   "author": "Tarunveer Singh",
   "license": "UNLICENSED",
