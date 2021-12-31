@@ -12,3 +12,5 @@
 
 - Asynchronously load edges and nodes
 - Fully customizable
+- Error checking
+- Performance testing
