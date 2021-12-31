@@ -4,7 +4,9 @@ import { Tree } from "./tree";
 
 interface NodeData {
   name: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   width: number;
+  // eslint-disable-next-line react/no-unused-prop-types
   height: number;
 }
 
