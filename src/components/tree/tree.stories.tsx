@@ -144,7 +144,66 @@ export default {
   title: "Components/Tree",
 };
 
-export function Default(): JSX.Element {
+export function SingleNodeTree(): JSX.Element {
+  return (
+    <Tree<NodeData>
+      edgeList={[]}
+      node={TestNode}
+      nodeList={[
+        {
+          id: "node1",
+          data: {
+            name: "Node 1",
+            width: 120,
+            height: 60,
+          },
+        },
+      ]}
+      rootNodeId="node1"
+    />
+  );
+}
+
+export function SimpleTree(): JSX.Element {
+  return (
+    <Tree<NodeData>
+      edgeList={[
+        { fromId: "node1", toId: "node2" },
+        { fromId: "node1", toId: "node3" },
+      ]}
+      node={TestNode}
+      nodeList={[
+        {
+          id: "node1",
+          data: {
+            name: "Node 1",
+            width: 120,
+            height: 60,
+          },
+        },
+        {
+          id: "node2",
+          data: {
+            name: "Node 2",
+            width: 120,
+            height: 60,
+          },
+        },
+        {
+          id: "node3",
+          data: {
+            name: "Node 3",
+            width: 120,
+            height: 60,
+          },
+        },
+      ]}
+      rootNodeId="node1"
+    />
+  );
+}
+
+export function ComplexTree(): JSX.Element {
   return (
     <Tree<NodeData>
       edgeList={defaultEdgeList}
@@ -155,7 +214,19 @@ export function Default(): JSX.Element {
   );
 }
 
-export function VaryingSizes(): JSX.Element {
+export function ComplexTreeWithExpandedNodes(): JSX.Element {
+  return (
+    <Tree<NodeData>
+      defaultExpandedNodes={["node1", "node4", "node7"]}
+      edgeList={defaultEdgeList}
+      node={TestNode}
+      nodeList={defaultNodeList}
+      rootNodeId="node1"
+    />
+  );
+}
+
+export function ComplexTreeWithVaryingNodeSizes(): JSX.Element {
   return (
     <Tree<NodeData>
       edgeList={defaultEdgeList}
@@ -166,7 +237,7 @@ export function VaryingSizes(): JSX.Element {
   );
 }
 
-export function CustomStyling(): JSX.Element {
+export function ComplexTreeWithCustomStyling(): JSX.Element {
   return (
     <Tree<NodeData>
       edgeList={defaultEdgeList}
