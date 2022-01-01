@@ -24,9 +24,10 @@ interface UseTreeInterface<Data> {
 function useTree<Data>(
   nodeList: NodeList<Data>,
   edgeList: EdgeList,
-  rootNodeId: string
+  rootNodeId: string,
+  defaultExpandedNodes: string[]
 ): UseTreeInterface<Data> {
-  const [openNodes, setOpenNodes] = useState<string[]>([]);
+  const [openNodes, setOpenNodes] = useState<string[]>(defaultExpandedNodes);
 
   const nodeMapping = useMemo(() => getNodeMapping(nodeList), [nodeList]);
   const edgeMapping = useMemo(() => getEdgeMapping(edgeList), [edgeList]);

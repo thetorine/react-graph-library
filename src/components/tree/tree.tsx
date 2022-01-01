@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { Level } from "src/components/level";
 import { Node } from "src/components/node";
@@ -10,17 +10,20 @@ import {
   TreeStyling,
 } from "src/common/types";
 import { TreeContext, TreeContextInterface } from "src/context/tree-context";
+import { useForceRender } from "src/hooks/use-force-render";
 import { useTree } from "src/hooks/use-tree";
 
 interface TreeProps<Data> {
-  nodeList: NodeList<Data>;
+  defaultExpandedNodes?: string[];
   edgeList: EdgeList;
-  rootNodeId: string;
+  nodeList: NodeList<Data>;
   node: (data: Data, properties: NodeProperties) => JSX.Element;
+  rootNodeId: string;
   styling?: TreeStyling;
 }
 
 function Tree<Data>({
+  defaultExpandedNodes = [],
   nodeList,
   edgeList,
   rootNodeId,
@@ -34,7 +37,8 @@ function Tree<Data>({
     hasChildren,
     isNodeOpen,
     onNodeClicked,
-  } = useTree(nodeList, edgeList, rootNodeId);
+  } = useTree(nodeList, edgeList, rootNodeId, defaultExpandedNodes);
+  const forceRender = useForceRender();
 
   const parentNodeRefs = useRef<NodeRefs>({});
   const treeContextValue = useMemo(
@@ -51,6 +55,12 @@ function Tree<Data>({
     }),
     [styling, getChildNodes, hasChildren, isNodeOpen]
   );
+
+  useEffect(() => {
+    if (defaultExpandedNodes.length > 0) {
+      forceRender();
+    }
+  }, [defaultExpandedNodes]);
 
   return (
     <TreeContext.Provider value={treeContextValue}>
@@ -74,9 +84,11 @@ function Tree<Data>({
             key={`level_${openNodeId}`}
             nodeComponent={node}
             nodes={getChildNodes(openNodeId)}
-            onNodeClicked={(nodeId, nodeRef) => {
-              parentNodeRefs.current[nodeId] = nodeRef;
+            onNodeClicked={(nodeId) => {
               onNodeClicked(nodeId, level + 1);
+            }}
+            onNodeRendered={(nodeId, nodeRef) => {
+              parentNodeRefs.current[nodeId] = nodeRef;
             }}
             parentNodeElement={parentNodeRefs.current[openNodeId]}
           />
